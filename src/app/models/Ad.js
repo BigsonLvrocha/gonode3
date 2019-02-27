@@ -23,6 +23,10 @@ const Ad = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  purchasedBy: {
+    type: mongoose.SchemaTypes.ObjectId,
+    ref: 'Purchase',
+  },
 });
 
 Ad.plugin(mongoosePaginate);

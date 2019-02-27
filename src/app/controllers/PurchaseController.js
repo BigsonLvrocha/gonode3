@@ -7,6 +7,9 @@ module.exports = {
   async store(req, res) {
     const { ad, content } = req.body;
     const purchasedAd = await Ad.findById(ad).populate('author');
+    if (purchasedAd.purchasedBy !== undefined) {
+      return res.status(403).json({ error: 'Ad already purchased' });
+    }
     const user = await User.findById(req.userId);
     Queue.create(PurchaseMail.key, {
       ad: purchasedAd,
